@@ -4,7 +4,7 @@ set cpo&vim
 let s:Filepath = desertfox#vital().Filepath
 
 let s:source = {
-      \ 'name': 'sphinx/images',
+      \ 'name': 'sphinx/image',
       \ 'action_table': {},
       \ 'default_action': 'insert_image'
       \ }
@@ -24,11 +24,11 @@ endfunction "}}}
 "
 " Actions
 "
-function! unite#sources#sphinximages#insert_image(candidate) abort "{{{
+function! unite#sources#sphinximage#insert_image(candidate) abort "{{{
   call s:insert_directive(a:candidate, 'image')
 endfunction "}}}
 
-function! unite#sources#sphinximages#insert_figure(candidate) abort "{{{
+function! unite#sources#sphinximage#insert_figure(candidate) abort "{{{
   call s:insert_directive(a:candidate, 'figure')
 endfunction "}}}
 
@@ -40,15 +40,15 @@ endfunction "}}}
 
 let s:source.action_table.insert_image = {
       \ 'description' : 'insert image directive',
-      \ 'func': function("unite#sources#sphinximages#insert_image"),
+      \ 'func': function("unite#sources#sphinximage#insert_image"),
       \ }
 
 let s:source.action_table.insert_figure = {
       \ 'description' : 'insert figure directive',
-      \ 'func': function("unite#sources#sphinximages#insert_figure"),
+      \ 'func': function("unite#sources#sphinximage#insert_figure"),
       \ }
 
-function! unite#sources#sphinximages#define()
+function! unite#sources#sphinximage#define()
   return s:source
 endfunction
 

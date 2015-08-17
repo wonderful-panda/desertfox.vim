@@ -4,7 +4,7 @@ set cpo&vim
 let s:Filepath = desertfox#vital().Filepath
 
 let s:source = {
-      \ 'name': 'sphinx/images/clip',
+      \ 'name': 'sphinx/image/clip',
       \ 'hooks': {},
       \ 'action_table': {},
       \ 'default_action': 'save'
@@ -80,7 +80,7 @@ endfunction "}}}
 function! s:source.action_table.insert_image.func(candidate) abort "{{{
   try
     if s:save_clipboard_image_with_confirm(a:candidate.action__path)
-      call unite#sources#sphinximages#insert_image(a:candidate)
+      call unite#sources#sphinximage#insert_image(a:candidate)
     endif
   catch /Sphinx:/
     echohl ErrorMsg | echomsg v:exception | echohl None
@@ -90,14 +90,14 @@ endfunction "}}}
 function! s:source.action_table.insert_figure.func(candidate) abort "{{{
   try
     if s:save_clipboard_image_with_confirm(a:candidate.action__path)
-      call unite#sources#sphinximages#insert_figure(a:candidate)
+      call unite#sources#sphinximage#insert_figure(a:candidate)
     endif
   catch /Sphinx:/
     echohl ErrorMsg | echomsg v:exception | echohl None
   endtry
 endfunction "}}}
 
-function! unite#sources#sphinximages_clip#define()
+function! unite#sources#sphinximage_clip#define()
   return s:source
 endfunction
 
