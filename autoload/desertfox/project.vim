@@ -9,7 +9,7 @@ let s:project = {
       \ }
 
 function! s:project.gather_images(basedir) abort "{{{
-  let pattern = '*.' . g:sphinx_image_ext
+  let pattern = '*.' . g:desertfox#image_ext
   let folders = [[a:basedir, '']]
 
   let files = map(sort(glob(s:Filepath.join(a:basedir, pattern), 0, 1)),
@@ -28,7 +28,7 @@ endfunction "}}}
 
 function! s:find_root(curdir) abort "{{{
   let dir = a:curdir
-  let depth = g:sphinx_root_dir_search_depth
+  let depth = g:desertfox#project_search_depth
   while depth > 0 && !empty(dir)
     if filereadable(s:Filepath.join(dir, 'conf.py'))
       return dir
@@ -40,7 +40,7 @@ function! s:find_root(curdir) abort "{{{
 endfunction "}}}
 
 function! s:find_image_dir(dirpath) "{{{
-  for dirname in g:sphinx_image_dirnames
+  for dirname in g:desertfox#image_dirnames
     if isdirectory(s:Filepath.join(a:dirpath, dirname))
       return dirname
     endif

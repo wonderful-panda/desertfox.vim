@@ -16,7 +16,7 @@ function! s:source.gather_candidates(args, context) abort "{{{
   if empty(a:context.input)
     return []
   endif
-  let filename = a:context.input . '.' . g:sphinx_image_ext
+  let filename = a:context.input . '.' . g:desertfox#image_ext
   let basedir = fnamemodify(bufname, ':p:h')
   let candidates = [
         \ {'word': filename, 
