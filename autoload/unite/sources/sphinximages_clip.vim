@@ -5,11 +5,16 @@ let s:Filepath = desertfox#vital().Filepath
 
 let s:source = {
       \ 'name': 'sphinx/images/clip',
+      \ 'hooks': {},
       \ 'action_table': {},
       \ 'default_action': 'save'
       \ }
 
-function! s:source.gather_candidates(args, context) abort "{{{
+function! s:source.hooks.on_init(args, context) abort "{{{
+  call desertfox#setup_unite_context(a:context)
+endfunction "}}}
+
+function! s:source.change_candidates(args, context) abort "{{{
   let sphinxcontext = desertfox#setup_unite_context(a:context)
   let proj = sphinxcontext.proj
   let bufname = sphinxcontext.bufname
@@ -34,8 +39,6 @@ function! s:source.gather_candidates(args, context) abort "{{{
   endif
   return candidates
 endfunction "}}}
-
-let s:source.change_candidates = s:source.gather_candidates
 
 "
 " Actions
