@@ -90,8 +90,12 @@ endfunction "}}}
 
 function! s:gather_candidates_funcs.image(...) abort "{{{
   let proj = desertfox#current_project()
-  let images = proj.gather_images(expand('%:p:h'))
-  return map(images, '{"word" : v:val.disppath, "menu" : "[sphinx]" }')
+  let images = proj.gather_images(desertfox#path#normalize(expand('%:p:h')))
+  return map(images, '{
+        \     "word": !empty(v:val.localpath) && v:val.relpath[:2] ==# "../"
+        \              ? v:val.localpath : v:val.relpath,
+        \     "menu": "[sphinx]"
+        \ }')
 endfunction "}}}
 
 "

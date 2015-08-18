@@ -3,7 +3,8 @@ set cpo&vim
 
 let s:V = vital#of('desertfox')
 let s:vital = {
-      \  'Filepath': s:V.import('System.Filepath')
+      \  'Filepath': s:V.import('System.Filepath'),
+      \  'Prelude': s:V.import('Prelude'),
       \ }
 
 function! desertfox#vital() abort
@@ -21,7 +22,7 @@ function! desertfox#setup_unite_context(context) abort "{{{
   if !has_key(a:context, 'source__sphinx')
     let a:context.source__sphinx = {
           \ 'proj': desertfox#current_project(),
-          \ 'bufname': bufname('%')
+          \ 'basedir': desertfox#path#normalize(fnamemodify(bufname('%'), ':p:h')),
           \ }
   endif
   return a:context.source__sphinx

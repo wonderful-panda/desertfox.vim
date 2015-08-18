@@ -1,8 +1,6 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:Filepath = desertfox#vital().Filepath
-
 let s:source = {
       \ 'name': 'sphinx/image/clip',
       \ 'hooks': {},
@@ -17,23 +15,21 @@ endfunction "}}}
 function! s:source.change_candidates(args, context) abort "{{{
   let sphinxcontext = desertfox#setup_unite_context(a:context)
   let proj = sphinxcontext.proj
-  let bufname = sphinxcontext.bufname
   if empty(a:context.input)
     return []
   endif
   let filename = a:context.input . '.' . g:desertfox#image_ext
-  let basedir = fnamemodify(bufname, ':p:h')
   let candidates = [
         \ {'word': filename, 
         \  'abbr': '[new image] ' . filename,
-        \  'action__path': s:Filepath.join(basedir, filename),
+        \  'action__path': sphinxcontext.basedir . '/' . filename,
         \  'kind': 'file',
         \ }]
   if !empty(proj.image_dirname)
     call add(candidates, 
-        \ {'word': s:Filepath.join('', proj.image_dirname, filename), 
-        \  'abbr': '[new image] ' . s:Filepath.join('', proj.image_dirname, filename), 
-        \  'action__path': s:Filepath.join(proj.root, proj.image_dirname, filename),
+        \ {'word': '/' . proj.image_dirname . '/' . filename, 
+        \  'abbr': '[new image] /' . proj.image_dirname . '/' . filename,
+        \  'action__path': proj.image_dir . '/' . filename,
         \  'kind': 'file',
         \ })
   endif

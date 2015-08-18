@@ -1,8 +1,6 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:Filepath = desertfox#vital().Filepath
-
 let s:source = {
       \ 'name': 'sphinx/image',
       \ 'action_table': {},
@@ -12,10 +10,10 @@ let s:source = {
 function! s:source.gather_candidates(args, context) abort "{{{
   let sphinxcontext = desertfox#setup_unite_context(a:context)
   let proj = sphinxcontext.proj
-  let basedir = fnamemodify(sphinxcontext.bufname, ':p:h')
-  let images = proj.gather_images(basedir)
+  let images = proj.gather_images(sphinxcontext.basedir)
   return map(images, '{
-        \     "word": v:val.disppath,
+        \     "word": !empty(v:val.localpath) && v:val.relpath[:2] ==# "../"
+        \              ? v:val.localpath : v:val.relpath,
         \     "action__path": v:val.abspath,
         \     "kind": "file",
         \     }')
