@@ -68,7 +68,7 @@ endfunction "}}}
 function! s:source.action_table.save.func(candidate) abort "{{{
   try
     call s:save_clipboard_image_with_confirm(a:candidate.action__path)
-  catch /Sphinx:/
+  catch /^Sphinx:/
     echohl ErrorMsg | echomsg v:exception | echohl None
   endtry
 endfunction "}}}
@@ -78,7 +78,7 @@ function! s:source.action_table.insert_image.func(candidate) abort "{{{
     if s:save_clipboard_image_with_confirm(a:candidate.action__path)
       call unite#sources#sphinximage#insert_image(a:candidate)
     endif
-  catch /Sphinx:/
+  catch /^Sphinx:/
     echohl ErrorMsg | echomsg v:exception | echohl None
   endtry
 endfunction "}}}
@@ -88,7 +88,7 @@ function! s:source.action_table.insert_figure.func(candidate) abort "{{{
     if s:save_clipboard_image_with_confirm(a:candidate.action__path)
       call unite#sources#sphinximage#insert_figure(a:candidate)
     endif
-  catch /Sphinx:/
+  catch /^Sphinx:/
     echohl ErrorMsg | echomsg v:exception | echohl None
   endtry
 endfunction "}}}
