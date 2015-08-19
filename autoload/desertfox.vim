@@ -28,6 +28,35 @@ function! desertfox#setup_unite_context(context) abort "{{{
   return a:context.source__sphinx
 endfunction "}}}
 
+function! desertfox#toggle_path() abort "{{{
+  try
+    let proj = desertfox#current_project()
+    if empty(proj.root)
+      throw 'Sphinx: project not found'
+    endif
+    let basedir = desertfox#path#normalize(expand('%:p:h'))
+    let [bufnum, lnum, col, off] = getpos('.')
+    let line = getline(lnum)
+    let path = expand('<cfile>')
+    let len = len(path)
+    if empty(path)
+      return
+    endif
+    let altpath = proj.toggle_path(basedir, path)
+    if empty(altpath)
+      return
+    endif
+    let start = stridx(line, path) 
+    while start + len < col
+      let start = stridx(line, path, start + len)
+    endwhile
+    call setline(lnum, (start ? line[:start - 1] : '') . altpath . line[start + len :])
+    call setpos('.', [bufnum, lnum, start + len(altpath), off])
+  catch /^Sphinx:/
+    echohl ErrorMsg | echomsg v:exception | echohl None
+  endtry
+endfunction "}}}
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
 

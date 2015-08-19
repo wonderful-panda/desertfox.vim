@@ -7,11 +7,34 @@ let s:project = {
       \ 'image_dir': '',
       \ }
 
-function! s:project.to_localpath(path) abort "{{{
+function! s:project.to_localpath(abspath) abort "{{{
   if empty(self.root)
     return ''
   endif
-  return '/' . desertfox#path#to_relative(self.root, a:path)
+  return '/' . desertfox#path#to_relative(self.root, a:abspath)
+endfunction "}}}
+
+function! s:project.relpath_to_localpath(basedir, relpath) abort "{{{
+  if empty(self.root)
+    return ''
+  endif
+  let abspath = simplify(a:basedir . '/' . a:relpath)
+  return self.to_localpath(abspath)
+endfunction "}}}
+
+function! s:project.localpath_to_relpath(basedir, localpath) abort "{{{
+  if empty(self.root)
+    return ''
+  endif
+  return desertfox#path#to_relative(a:basedir, self.root . a:localpath)
+endfunction "}}}
+
+function! s:project.toggle_path(basedir, path) abort "{{{
+  if a:path =~# '\v^/'
+    return self.localpath_to_relpath(a:basedir, a:path)
+  else
+    return self.relpath_to_localpath(a:basedir, a:path)
+  endif
 endfunction "}}}
 
 function! s:project.gather_images(basedir) abort "{{{
