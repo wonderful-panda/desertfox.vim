@@ -4,7 +4,6 @@ set cpo&vim
 let s:V = vital#of('desertfox')
 let s:vital = {
       \  'Filepath': s:V.import('System.Filepath'),
-      \  'Prelude': s:V.import('Prelude'),
       \ }
 
 function! desertfox#vital() abort

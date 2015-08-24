@@ -2,10 +2,9 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 let s:F = desertfox#vital().Filepath
-let s:P = desertfox#vital().Prelude
 
 function! desertfox#path#normalize(path) abort "{{{
-  let ret = s:P.substitute_path_separator(a:path)
+  let ret = s:F.unify_separator(a:path)
   return ret[-1:-1] == '/' ? ret[0:-2] : ret
 endfunction "}}}
 
