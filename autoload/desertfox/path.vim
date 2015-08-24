@@ -33,6 +33,10 @@ function! desertfox#path#to_relative(basedir, path) abort "{{{
   endif
 endfunction "}}}
 
+function! desertfox#path#strip_ext(path) abort "{{{
+  return substitute(a:path, '\v\.[^.]+$', '', '')
+endfunction "}}}
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
 

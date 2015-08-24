@@ -50,6 +50,19 @@ function! s:project.gather_images(basedir) abort "{{{
         \ }')
 endfunction "}}}
 
+function! s:project.gather_rest_texts(basedir) abort "{{{
+  if !empty(self.root)
+    let files = glob(self.root . '/**/*.rst', 0, 1)
+  else
+    let files = glob(a:basedir . '/**/*.rst', 0, 1)
+  endif
+  return map(map(files,  'desertfox#path#normalize(v:val)'), '{
+        \ "abspath": v:val,
+        \ "relpath": desertfox#path#to_relative(a:basedir, v:val),
+        \ "localpath": self.to_localpath(v:val)
+        \ }')
+endfunction "}}}
+
 function! s:find_root(curdir) abort "{{{
   let dir = a:curdir
   let depth = g:desertfox#project_search_depth
